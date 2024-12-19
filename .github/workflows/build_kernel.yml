@@ -211,6 +211,7 @@ jobs:
           files: |
              ${{ github.workspace }}/${{ env.ZIP_KSU_NEXT }}
              ${{ github.workspace }}/${{ env.ZIP_KSU }}
+             ${{ github.workspace }}/${{ env.ZIP_KSU_SUSFS }}
           token: ${{ secrets.GITHUB_TOKEN }}
           name: KernelSU Release - ${{ env.KERNELSU_VERSION }}
           tag_name: ${{ github.run_id }}
