@@ -34,21 +34,32 @@ jobs:
           else
             echo "UPDATE_NEXT_KERNELSU=false" >> $GITHUB_ENV
           fi
-
-      - name: Create file with KernelSU version
+        
+      - name: Empty the file if new version found
+        run: |
+            cat << EOF > "set_workflow.sh"
+            #!/bin/bash
+            
+            EOF
+        
+      - name: Create files for KernelSU Stock
         if: env.UPDATE_KERNELSU == 'true'
-        run: echo "${{ env.LATEST_RELEASE }}" > ksu_version.txt
+        run: |
+          echo "${{ env.LATEST_RELEASE }}" > ksu_version.txt
+          echo 'echo "UPDATE_IN_KERNELSU_STOCK=true" >> $GITHUB_ENV' >> set_workflow.sh
 
-      - name: Create file with KernelSU next version
+      - name: Create files for KernelSU next
         if: env.UPDATE_NEXT_KERNELSU == 'true'
-        run: echo "${{ env.LATEST_NEXT_RELEASE }}" > ksu_next_version.txt
+        run: |
+          echo "${{ env.LATEST_NEXT_RELEASE }}" > ksu_next_version.txt
+          echo 'echo "UPDATE_IN_KERNELSU_NEXT=true" >> $GITHUB_ENV' >> set_workflow.sh
 
       - name: Commit and push changes
         if: env.UPDATE_KERNELSU == 'true' || env.UPDATE_NEXT_KERNELSU == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ksu_version.txt ksu_next_version.txt
+          git add ksu_version.txt ksu_next_version.txt set_workflow.sh
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update to latest KernelSU release tags" && git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${GITHUB_REF#refs/heads/})
 
       - name: Trigger Build Kernel workflow

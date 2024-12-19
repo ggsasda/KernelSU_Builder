@@ -39,8 +39,9 @@ fi
 target="${GITHUB_WORKSPACE}/kernel/$target"
 
 # Check the KERNELSU environment variable and move the target to the appropriate directory
-if [ "${KERNELSU_STOCK}" == "true" ]
-then
+if [ "${KERNELSU_SUSFS}" == "true" ]; then
+    mv $target "${GITHUB_WORKSPACE}/outw/next_susfs"
+elif [ "${KERNELSU_STOCK}" == "true" ]; then
     mv $target "${GITHUB_WORKSPACE}/outw/stock"
 else
     mv $target "${GITHUB_WORKSPACE}/outw/next"

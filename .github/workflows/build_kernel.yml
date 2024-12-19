@@ -72,6 +72,7 @@ jobs:
           mkdir outw
           mkdir outw/next
           mkdir outw/stock
+          mkdir outw/next_susfs
 
       # - name: Move kernel without KernelSU support to output directory
       #   run: |
@@ -83,6 +84,11 @@ jobs:
       #     chmod +x clean.sh
       #     ./clean.sh
 
+      - name: Get what to build
+        run: |
+            chmod +x set_workflow.sh
+            ./set_workflow.sh
+
       - name: Set KERNELSU environment variable to true
         run: |
           echo "KERNELSU=true" >> $GITHUB_ENV
@@ -93,16 +99,19 @@ jobs:
           echo "KERNELSU_NEXT_VERSION=$(cat ksu_next_version.txt)" >> $GITHUB_ENV
 
       - name: Add KernelSU Next support to kernel
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
         run: |
           chmod +x kernelSU_Next.sh
           ./kernelSU_Next.sh
 
       - name: Compile kernel with KernelSU support
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
         run: |
           chmod +x build.sh
           ./build.sh
 
       - name: Move kernel with KernelSU support to output directory
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
         run: |
           chmod +x move.sh
           ./move.sh
@@ -112,24 +121,68 @@ jobs:
             echo "KERNELSU_STOCK=true" >> $GITHUB_ENV
 
       - name: Clean build environment
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
         run: |
           chmod +x clean.sh
           ./clean.sh
 
       - name: Add KernelSU support to kernel
+        if: env.UPDATE_IN_KERNELSU_STOCK == 'true'
         run: |
             chmod +x kernelSU.sh
             ./kernelSU.sh
   
       - name: Compile kernel with KernelSU support
+        if: env.UPDATE_IN_KERNELSU_STOCK == 'true'
         run: |
             chmod +x build.sh
             ./build.sh
   
       - name: Move kernel with KernelSU support to output directory
+        if: env.UPDATE_IN_KERNELSU_STOCK == 'true'
         run: |
             chmod +x move.sh
-            ./move.sh          
+            ./move.sh  
+            
+      - name: Set KERNELSU SUSFS environment variable to true
+        run: |
+            echo "KERNELSU_SUSFS=true" >> $GITHUB_ENV
+            echo "KERNELSU_NEXT_SUSFS=true" >> $GITHUB_ENV
+
+      - name: Clean build environment
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+            chmod +x clean.sh
+            ./clean.sh
+
+      - name: Add KernelSU Next (SUSFS v1.5.3) support to kernel
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+            chmod +x kernelSU_Next.sh
+            ./kernelSU_Next.sh
+
+      - name: Set KERNEL ROOT environment variable
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+            echo "KERNEL_ROOT=${{ github.workspace }}/kernel" >> $GITHUB_ENV
+
+      - name: Add SusFs
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+            chmod +x susfs.sh
+            ./susfs.sh
+    
+      - name: Compile kernel with KernelSU support
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+          chmod +x build.sh
+          ./build.sh
+    
+      - name: Move kernel with KernelSU support to output directory
+        if: env.UPDATE_IN_KERNELSU_NEXT == 'true'
+        run: |
+          chmod +x move.sh
+          ./move.sh
 
       - name: Clone AnyKernel3
         run: |
@@ -139,6 +192,7 @@ jobs:
       - name: Set ZIP_KSU_NEXT and ZIP_KSU environment variables
         run: |
           echo "ZIP_KSU_NEXT=${{ env.VERSION }}-KernelSU_Next-$(cat ksu_next_version.txt).zip" >> $GITHUB_ENV
+          echo "ZIP_KSU_SUSFS=${{ env.VERSION }}-KernelSU_Next_SusFs-$(cat ksu_next_version.txt).zip" >> $GITHUB_ENV
           echo "ZIP_KSU=${{ env.VERSION }}-KernelSU-$(cat ksu_version.txt).zip" >> $GITHUB_ENV
 
       - name: Make AnyKernel3 zip

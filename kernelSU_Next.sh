@@ -20,6 +20,7 @@ fi
 
 # Parse the JSON file to get the kernelSU version commands from KernelSU_Next corresponding to the VERSION environment variable
 kernelSU_commands=$(echo "$json" | jq -r '.KernelSU_Next.version[]')
+kernelSU_susfs_commands=$(echo "$json" | jq -r '.KernelSU_Next.susfs[]')
 
 # Check if commands were retrieved successfully
 if [ -z "$kernelSU_commands" ]; then
@@ -38,9 +39,15 @@ done
 # Enter kernel directory
 cd kernel || { echo -e "${RED}Failed to enter kernel directory. Exiting...${NC}"; exit 1; }
 
+if [ "${KERNELSU_SUSFS}" == "true" ]; then
+echo "$kernelSU_susfs_commands" | while read -r command; do
+    # Replace the placeholder with the actual value
+    eval "$command"
+done
+else
 # Execute the commands
 echo "$kernelSU_commands" | while read -r command; do
     # Replace the placeholder with the actual value
-    command=${command//kernelsu-version/$kernelsu_version}
     eval "$command"
 done
+fi
