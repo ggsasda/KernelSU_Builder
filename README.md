@@ -33,3 +33,4 @@ Please note that this workflow is provided as-is without any warranties. Use it 
 
 ### [KernelSU-NonGki](https://github.com/rsuntk/KernelSU)
 ### [KernelSU-Next](https://github.com/rifsxd/KernelSU-Next)
+### [ksu_module_susfs](https://github.com/sidex15/ksu_module_susfs)
