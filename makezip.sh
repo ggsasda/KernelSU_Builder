@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get ZIP name for kernel without KernelSU from GitHub environment variable
-zip_no_ksu=${ZIP_NO_KSU}
+zip_susfs_ksu=${ZIP_SUSFS_KSU}
 
 # Get ZIP name for kernel with KernelSU from GitHub environment variable
 zip_ksu=${ZIP_KSU}
@@ -17,10 +17,10 @@ done
 cd AnyKernel3
 
 # Zip the kernel
-zip -r9 "${zip_no_ksu}" *
+zip -r9 "${zip_susfs_ksu}" *
 
 # Move the ZIP to to Github workspace
-mv "${zip_no_ksu}" "${GITHUB_WORKSPACE}/"
+mv "${zip_susfs_ksu}" "${GITHUB_WORKSPACE}/"
 
 # Remove the copied files from the AnyKernel3 directory
 for file in $COPIED_FILES; do
