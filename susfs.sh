@@ -33,6 +33,7 @@ echo "$kernelSU_commands" | while read -r command; do
     # Replace the placeholder with the actual value
     eval "$command"
 done
+cd ..
 
 # Print the commands that will be executed
 echo -e "\033[31mClone.sh will execute following commands corresponding to ${version}:\033[0m"

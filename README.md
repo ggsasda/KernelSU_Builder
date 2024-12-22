@@ -2,8 +2,8 @@
 
 KernelSU Builder is a tool that allows you to build kernels with or without KernelSU support. It uses GitHub Actions for automated kernel builds and supports multiple versions and configurations. The kernel is fully compiled using Clang.
 
-[![Build Kernel](https://github.com/HowWof/KernelSU_Builder/actions/workflows/build_kernel.yml/badge.svg)](https://github.com/HowWof/KernelSU_Builder/actions/workflows/build_kernel.yml)
-[![Watch KernelSU](https://github.com/HowWof/KernelSU_Builder/actions/workflows/watch_ksu.yml/badge.svg)](https://github.com/HowWof/KernelSU_Builder/actions/workflows/watch_ksu.yml)
+[![KernelSU Builder](https://github.com/ggsasda/KernelSU_Builder/actions/workflows/build_kernel.yml/badge.svg)](https://github.com/ggsasda/KernelSU_Builder/actions/workflows/build_kernel.yml)
+[![Watch KernelSU](https://github.com/ggsasda/KernelSU_Builder/actions/workflows/watch_ksu.yml/badge.svg)](https://github.com/ggsasda/KernelSU_Builder/actions/workflows/watch_ksu.yml)
 
 ## Table of Contents
 - [Building Kernel](#building-kernel)
@@ -30,3 +30,7 @@ To flash the kernel onto your device:
 5. Reboot your device.
 
 Please note that this workflow is provided as-is without any warranties. Use it at your own risk. Ensure compatibility and follow device-specific guidelines before flashing custom kernels. Read and understand the installation instructions and warnings before proceeding with kernel installation.
+
+### [KernelSU-NonGki](https://github.com/rsuntk/KernelSU)
+### [KernelSU-Next](https://github.com/rifsxd/KernelSU-Next)
+### [ksu_module_susfs](https://github.com/sidex15/ksu_module_susfs)

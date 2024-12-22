@@ -68,11 +68,24 @@ jobs:
           mkdir outw/susfs
           mkdir outw/next
 
-      - name: Set KERNELSU environment variable to true
-        run: echo "KERNELSU=true" >> $GITHUB_ENV
-
       - name: Set KERNELSU_VERSION environment variable
         run: echo "KERNELSU_VERSION=$(cat ksu_version.txt)" >> $GITHUB_ENV
+
+      - name: Set KERNEL ROOT environment variable
+        run: echo "KERNEL_ROOT=${{ github.workspace }}/kernel" >> $GITHUB_ENV
+  
+      - name: Add KernelSU and SUSFS support to kernel
+        run: |
+          chmod +x susfs.sh
+          ./susfs.sh
+
+      - name: Clean build environment
+        run: |
+          chmod +x clean.sh
+          ./clean.sh
+
+      - name: Set KERNELSU environment variable to true
+        run: echo "KERNELSU=true" >> $GITHUB_ENV
 
       - name: Add KernelSU support to kernel
         run: |
@@ -88,20 +101,6 @@ jobs:
         run: |
           chmod +x move.sh
           ./move.sh
-
-      - name: Clean build environment
-        run: |
-          chmod +x clean.sh
-          ./clean.sh
-
-      - name: Set KERNEL ROOT environment variable
-        run: |
-          echo "KERNEL_ROOT=${{ github.workspace }}/kernel" >> $GITHUB_ENV
-
-      - name: Add KernelSU and SUSFS support to kernel
-        run: |
-          chmod +x susfs.sh
-          ./susfs.sh
 
       - name: Clone AnyKernel3
         run: |
