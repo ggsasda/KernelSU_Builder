@@ -79,10 +79,15 @@ jobs:
           chmod +x susfs.sh
           ./susfs.sh
 
-      - name: Compile kernel with KernelSU support
+      - name: Compile kernel with KernelSU And SusFS support
         run: |
           chmod +x build.sh
           ./build.sh
+
+      - name: Move kernel with KernelSU And SusFS support to output directory
+        run: |
+          chmod +x move.sh
+          ./move.sh
 
       - name: Clean build environment
         run: |
