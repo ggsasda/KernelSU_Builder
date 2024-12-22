@@ -70,9 +70,9 @@ Clean:
 # Stable-pin version of KernelSU is used by KernelSU.sh to replace placeholder (kernelsu-version) with the newest stable version from ksu_version.txt
 KernelSU:
   next:
-    - curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/main/kernel/setup.sh" | bash -s next
+    - curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh" | bash -s next
   susfs:
-    - curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/main/kernel/setup.sh" | bash -s susfs-4.14
+    - curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/refs/heads/next/kernel/setup.sh" | bash -s susfs-4.14
 
 SusFs:
   clone:

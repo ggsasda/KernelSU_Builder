@@ -79,6 +79,11 @@ jobs:
           chmod +x susfs.sh
           ./susfs.sh
 
+      - name: Compile kernel with KernelSU support
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
       - name: Clean build environment
         run: |
           chmod +x clean.sh
