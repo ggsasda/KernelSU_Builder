@@ -18,6 +18,7 @@ fi
 
 # Parse the JSON file
 out_commands=$(echo $json | jq -r '.Clean.out[]')
+kernelsu_commands=$(echo $json | jq -r '.Clean.kernelsu[]')
 kernel_commands=$(echo $json | jq -r '.Clean.kernel[]')
 custom_commands=$(echo $json | jq -r '.Clean.custom[]')
 
@@ -38,6 +39,10 @@ cd kernel
 
 # Execute the out commands
 echo "$out_commands" | while read -r command; do
+    eval "$command"
+done
+
+echo "$kernelsu_commands" | while read -r command; do
     eval "$command"
 done
 

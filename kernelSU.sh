@@ -19,24 +19,13 @@ then
     exit 1
 fi
 
-# Parse the JSON file to get the kernelSU version corresponding to the VERSION environment variable
-kernelSU_version=$(echo $json | jq -r --arg version "$version" '.[$version].kernelSU[]')
-
-# Check if kernelSU_version is empty
-if [ -z "$kernelSU_version" ]
-then
-    echo -e "${RED}Failed to parse JSON. Exiting...${NC}"
-    exit 1
-fi
-
 # Parse the JSON file to get the commands corresponding to the kernelSU_version
-kernelSU_commands=$(echo $json | jq -r --arg version "$kernelSU_version" '.KernelSU.version[$version][]')
+kernelSU_commands=$(echo "$json" | jq -r '.KernelSU.next[]')
 
 # Print the commands that will be executed
 echo -e "${GREEN}kernelSU.sh will execute following commands:${NC}"
 echo "$kernelSU_commands" | while read -r command; do
     # Replace the placeholder with the actual value
-    command=${command//kernelsu-version/$kernelsu_version}
     echo -e "${RED}$command${NC}"
 done
 
@@ -46,6 +35,5 @@ cd kernel
 # Execute the commands
 echo "$kernelSU_commands" | while read -r command; do
     # Replace the placeholder with the actual value
-    command=${command//kernelsu-version/$kernelsu_version}
     eval "$command"
 done

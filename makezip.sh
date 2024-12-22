@@ -8,7 +8,7 @@ zip_ksu=${ZIP_KSU}
 
 # Copy the kernel image to the AnyKernel3 directory and store the names of the copied files in an environment variable
 COPIED_FILES=""
-for file in outw/false/*; do
+for file in outw/susfs/*; do
     cp "$file" AnyKernel3
     COPIED_FILES="${COPIED_FILES} $(basename $file)"
 done
@@ -32,7 +32,7 @@ cd "${GITHUB_WORKSPACE}"
 
 # Copy the kernel image with KernelSU support to the AnyKernel3 direoctory and store the names of the copied files in an environment variable
 COPIED_FILES=""
-for file in outw/true/*; do
+for file in outw/next/*; do
     cp "$file" AnyKernel3
     COPIED_FILES="${COPIED_FILES} $(basename $file)"
 done

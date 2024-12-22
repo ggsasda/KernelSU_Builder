@@ -17,7 +17,7 @@ jobs:
       - name: Check for new release
         id: check_release
         run: |
-          LATEST_RELEASE=$(curl --silent "https://api.github.com/repos/tiann/KernelSU/releases/latest" | jq -r .tag_name)
+          LATEST_RELEASE=$(curl --silent "https://api.github.com/repos/rifsxd/KernelSU-Next/releases/latest" | jq -r .tag_name)
           CURRENT_RELEASE=$(cat ksu_version.txt || true)
           if [ "$LATEST_RELEASE" != "$CURRENT_RELEASE" ]; then
             echo "::set-output name=release::$LATEST_RELEASE"

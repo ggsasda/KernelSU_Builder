@@ -41,7 +41,7 @@ target="${GITHUB_WORKSPACE}/kernel/$target"
 # Check the KERNELSU environment variable and move the target to the appropriate directory
 if [ "${KERNELSU}" == "true" ]
 then
-    mv $target "${GITHUB_WORKSPACE}/outw/true"
+    mv $target "${GITHUB_WORKSPACE}/outw/next"
 else
-    mv $target "${GITHUB_WORKSPACE}/outw/false"
+    mv $target "${GITHUB_WORKSPACE}/outw/susfs"
 fi
